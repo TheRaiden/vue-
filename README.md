@@ -1,6 +1,7 @@
 # 基于Vue的供应链管理系统的设计与实现
 
 能够连接数据库，实现登录和新增数据，无法查询数据
+
 我先把它放在这里.jpg
 
 This template should help get you started developing with Vue 3 in Vite.
