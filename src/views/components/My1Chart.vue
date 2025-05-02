@@ -1,13 +1,13 @@
 <template>
   <el-card>
     <template #header>
-      <div class="title">myChart</div>
+      <div class="title">My1Chart</div>
     </template>
     <div :id="id" :class="className" :style="{ height, width }"></div>
   </el-card>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, onActivated, markRaw } from 'vue'
 import axios from 'axios'
@@ -15,7 +15,7 @@ import axios from 'axios'
 const prop = defineProps({
   id: {
     type: String,
-    default: 'myChart',
+    default: 'my1Chart',
   },
   className: {
     type: String,
@@ -41,7 +41,7 @@ const options = ref({
     },
   },
   legend: {
-    data: ['压缩机'], // 修改图例名称
+    data: ['齿轮'], // 修改图例名称
   },
   grid: {
     left: '3%',
@@ -64,7 +64,7 @@ const options = ref({
   },
   series: [
     {
-      name: '压缩机', // 修改系列名称
+      name: '齿轮', // 修改系列名称
       type: 'bar',
       data: [], // 动态加载数据
       barWidth: 30, // 固定柱宽度
@@ -78,7 +78,7 @@ const options = ref({
 // 获取数据并更新图表
 const fetchData = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/compressor')
+    const response = await axios.get('http://localhost:8000/api/gear')
     const data = response.data
     options.value.xAxis.data = data.map((item: any) => `${item.name} (${item.company})`) // 显示名称和公司
     options.value.series[0].data = data.map((item: any) => item.have)

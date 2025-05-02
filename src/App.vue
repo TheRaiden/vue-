@@ -7,22 +7,21 @@
         <div class="dropdown"></div>
         <router-link to="/add">新增</router-link>
         <div class="dropdown"></div>
-        <router-link to="/search">查询</router-link>
-        <div class="dropdown"></div>
       </div>
       <div class="spacer"></div>
       <router-link to="/my">我的</router-link>
       <div class="dropdown"></div>
       <router-link to="/about">关于</router-link>
-      <button @click="handleLogout">登出</button>
+      <button @click="handleLogout">退出</button>
     </nav>
-    <div class="content">
+    <div class="content" :class="{ 'full-width': !$store.state.isLoggedIn }">
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
+//调用logout动作
 export default {
   name: 'App',
   methods: {
@@ -96,5 +95,9 @@ nav a.router-link-exact-active {
 .content {
   margin-left: 120px; /* 确保内容不被导航栏遮挡 */
   padding-top: 20px;
+}
+
+.content.full-width {
+  margin-left: 0; /* 登录页面时内容全宽 */
 }
 </style>

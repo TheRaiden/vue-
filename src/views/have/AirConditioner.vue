@@ -1,17 +1,11 @@
 <template>
-  <div class="have">
-    <h1>库存</h1>
+  <div class="air-conditioner">
+    <h1>空调库存</h1>
     <el-button class="refresh-button" type="primary" @click="fetchData">刷新</el-button>
-    <div class="table-container">
-      <el-table :data="totalsData" class="totals-table">
-        <el-table-column prop="category" label="类别" width="180"></el-table-column>
-        <el-table-column prop="total" label="总数" width="180"></el-table-column>
-      </el-table>
-    </div>
     <div class="table-container">
       <el-table :data="tableData" class="custom-table" style="margin-top: 20px">
         <el-table-column prop="name" label="名称" width="180"></el-table-column>
-        <el-table-column prop="have" label="合同" width="180"></el-table-column>
+        <el-table-column prop="have" label="数量" width="180"></el-table-column>
         <el-table-column prop="company" label="公司" width="180"></el-table-column>
         <el-table-column label="操作" width="180">
           <template #default="scope">
@@ -23,23 +17,20 @@
       </el-table>
     </div>
     <div class="navigation-buttons">
-      <el-button class="nav-button" type="success" @click="navigateTo('gear')">齿轮</el-button>
-      <el-button class="nav-button" type="success" @click="navigateTo('air-conditioner')"
-        >空调</el-button
-      >
-      <el-button class="nav-button" type="success" @click="navigateTo('compressor')"
+      <el-button class="nav-button" type="success" @click="navigateTo('')">库存</el-button>
+      <el-button class="nav-button" type="success" @click="navigateTo('Gear')">齿轮</el-button>
+      <el-button class="nav-button" type="success" @click="navigateTo('Compressor')"
         >压缩机</el-button
       >
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 import { ElTable, ElTableColumn, ElButton } from 'element-plus'
 
 export default {
-  name: 'Have',
+  name: 'AirConditioner',
   components: {
     ElTable,
     ElTableColumn,
@@ -48,48 +39,26 @@ export default {
   data() {
     return {
       tableData: [],
-      airTotal: 0,
-      gearTotal: 0,
-      compressorTotal: 0,
     }
-  },
-  computed: {
-    totalsData() {
-      return [
-        { category: '空调', total: this.airTotal },
-        { category: '齿轮', total: this.gearTotal },
-        { category: '压缩机', total: this.compressorTotal },
-      ]
-    },
   },
   methods: {
     async fetchData() {
       try {
-        const namesResponse = await axios.get('http://localhost:8000/api/names')
-        this.tableData = namesResponse.data
-
-        const airResponse = await axios.get('http://localhost:8000/api/air')
-        this.airTotal = airResponse.data.reduce((sum, item) => sum + Number(item.have), 0) // 确保以数字形式相加
-
-        const gearResponse = await axios.get('http://localhost:8000/api/gear')
-        this.gearTotal = gearResponse.data.reduce((sum, item) => sum + Number(item.have), 0) // 确保以数字形式相加
-
-        const compressorResponse = await axios.get('http://localhost:8000/api/compressor')
-        this.compressorTotal = compressorResponse.data.reduce(
-          (sum, item) => sum + Number(item.have),
-          0,
-        ) // 确保以数字形式相加
+        const response = await axios.get('http://localhost:8000/api/air')
+        this.tableData = response.data
       } catch (error) {
         console.error('获取数据失败:', error)
       }
     },
     async deleteItem(name) {
       try {
-        const response = await axios.post('http://localhost:8000/api/names/delete', { name })
+        const response = await axios.post('http://localhost:8000/api/air/delete', {
+          name,
+        })
         this.$message.success(response.data.message)
         this.fetchData() // 删除后立即刷新数据
       } catch (error) {
-        this.$message.error(error.response?.data?.message || '删除失败')
+        this.$message.error(error.response.data.message || '删除失败')
       }
     },
     navigateTo(page) {
@@ -103,36 +72,20 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 34px;
-  margin-bottom: 20px;
-}
-.have {
-  text-align: left; /* 将内容对齐到左侧 */
+.air-conditioner {
+  text-align: left;
   margin-top: 50px;
   min-height: 100vh;
-  margin-left: 120px; /* 确保不与导航栏重叠 */
+  margin-left: 120px;
 }
 .refresh-button {
   margin-bottom: 20px;
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 8px;
-  background-color: #409eff;
+  background-color: #69b4ff;
   color: #ffffff; /* 修改字体颜色为白色 */
   border: none; /* 移除黑色线 */
-}
-.totals-table {
-  margin: 20px 0;
-  width: 60%;
-  border: 1px solid #ffffff;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #ffffff;
-  border-collapse: collapse;
-}
-.totals-table :deep(.el-table__row) {
-  border-bottom: 1px solid #000000;
 }
 .custom-table {
   margin: 20px 0;
@@ -144,7 +97,7 @@ h1 {
   border-collapse: collapse;
 }
 .custom-table :deep(.el-table__row) {
-  border-bottom: 1px rgb(255, 255, 255) dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
 }
 .navigation-buttons {
   margin-top: 20px;

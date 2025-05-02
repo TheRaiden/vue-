@@ -21,6 +21,7 @@ const store = createStore({
   },
 })
 
+//定义logout动作
 function initializeStore() {
   const token = localStorage.getItem('token')
   if (token) {

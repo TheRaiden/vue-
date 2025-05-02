@@ -89,14 +89,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* 确保容器至少占满视口高度 */
-  background-image: url('https://example.com/your-background-image.jpg'); /* 替换为你的背景图片路径 */
+  min-height: 95vh; /* 确保容器至少占满视口高度 */
+  background-image: url('background.jpg'); /* 替换为你的背景图片路径 */
   background-size: cover;
   background-position: center;
-}
-
-.login-header {
-  margin-bottom: 40px;
 }
 
 .login-header h1 {

@@ -3,9 +3,11 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Have from '../views/Have.vue'
 import Add from '../views/Add.vue'
-import Search from '../views/Search.vue'
 import My from '../views/My.vue'
 import About from '../views/About.vue'
+import Gear from '../views/have/Gear.vue'
+import AirConditioner from '../views/have/AirConditioner.vue'
+import Compressor from '../views/have/Compressor.vue'
 
 const routes = [
   {
@@ -34,14 +36,24 @@ const routes = [
     component: Add,
   },
   {
-    path: '/search',
-    name: 'Search',
-    component: Search,
-  },
-  {
     path: '/my',
     name: 'My',
     component: My,
+  },
+  {
+    path: '/have/gear',
+    name: 'Gear',
+    component: Gear,
+  },
+  {
+    path: '/have/air-conditioner',
+    name: 'AirConditioner',
+    component: AirConditioner,
+  },
+  {
+    path: '/have/compressor',
+    name: 'Compressor',
+    component: Compressor,
   },
 ]
 

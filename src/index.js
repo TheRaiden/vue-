@@ -12,6 +12,10 @@ const connection = createConnection({
   database: 'supply',
 })
 
+// 确保数据库用户拥有以下权限：
+// 1. INSERT 权限：用于新增数据。
+// 2. DELETE 权限：用于删除数据。
+
 // 连接数据库
 connection.connect((err) => {
   if (err) {
@@ -20,8 +24,9 @@ connection.connect((err) => {
   }
   console.log('连接成功!')
 
-  // 执行查询操作
-  connection.query('SELECT * FROM users', (err, result) => {
+  // 使用参数化查询以防止 SQL 注入
+  const query = 'SELECT * FROM users WHERE 1 = ?'
+  connection.query(query, [1], (err, result) => {
     if (err) {
       console.error('查询失败: ' + err.message)
     } else {

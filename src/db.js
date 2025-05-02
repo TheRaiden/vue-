@@ -53,3 +53,29 @@ export function end(callback) {
 }
 
 export default connection
+
+// 创建 history 表
+function createHistoryTable() {
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS history (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      user VARCHAR(255) NOT NULL,
+      time DATETIME NOT NULL
+    )
+  `
+}
+
+// 保存用户登录记录
+export function saveLoginHistory(username) {
+  const insertQuery = 'INSERT INTO history (user, time) VALUES (?, NOW())'
+  connection.query(insertQuery, [username], (err) => {
+    if (err) {
+      console.error('保存登录记录失败:', err)
+    } else {
+      console.log('登录记录已保存')
+    }
+  })
+}
+
+// 调用创建表函数
+createHistoryTable()

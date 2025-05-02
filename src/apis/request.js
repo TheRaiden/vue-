@@ -8,16 +8,21 @@ const request = axios.create({
   timeout: 5000,
 })
 
-// request 拦截器
-// 可以自请求发送前对请求做一些处理
-// 比如统一加token，对请求参数统一加密
 request.interceptors.request.use(
   (config) => {
-    config.headers['Content-Type'] = 'application/json;charset=utf-8'
+    // 保留已有 Content-Type（兼容文件上传）
+    if (!config.headers['Content-Type']) {
+      config.headers['Content-Type'] = 'application/json;charset=utf-8'
+    }
 
-    const token = localStorage.getItem('token') //从缓存里获取token
+    // 从 localStorage 获取 Token
+    const token = localStorage.getItem('token')
     if (token) {
-      config.headers['Authorization'] = token //如果有token，把token作为请求头
+      config.headers.Authorization = `Bearer ${token}` // 关键修复点
+      console.log('[请求拦截器] 已添加 Authorization 头:', config.headers.Authorization)
+    } else {
+      console.error('[请求拦截器] Token 不存在')
+      // 可选：跳转到登录页
     }
 
     return config

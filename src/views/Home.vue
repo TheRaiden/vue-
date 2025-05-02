@@ -1,43 +1,51 @@
 <template>
   <div class="home">
+    <h1>欢迎来到供应链管理系统</h1>
     <div class="dashboard-container">
-      <div class="chart-container">
-        <RadarChart id="radarChart" class="chart" />
+      <div class="chart-wrapper">
+        <div class="chart-container">
+          <My1Chart ref="my1Chart" id="my1Chart" class="chart" />
+        </div>
+        <div class="description-container">
+          <p>这是第一个图表的描述。</p>
+        </div>
       </div>
-      <div class="chart-container">
-        <PieChart id="pieChart" class="chart" />
+      <div class="chart-wrapper">
+        <div class="chart-container">
+          <myChart ref="myChart" id="myChart" class="chart" />
+        </div>
+        <div class="description-container">
+          <p>这是第二个图表的描述。</p>
+        </div>
       </div>
-      <div class="chart-container">
-        <myChart id="myChart" class="chart" />
-      </div>
-      <div class="chart-container">
-        <my2Chart id="my2Chart" class="chart" />
-      </div>
-      <div class="chart-container">
-        <BarChart id="barChart" class="chart" />
+      <div class="chart-wrapper">
+        <div class="chart-container">
+          <my2Chart ref="my2Chart" id="my2Chart" class="chart" />
+        </div>
+        <div class="description-container">
+          <p>这是第三个图表的描述。</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import RadarChart from './components/RadarChart.vue'
 import myChart from './components/myChart.vue'
 import my2Chart from './components/my2Chart.vue'
-import BarChart from './components/BarChart.vue'
-import PieChart from './components/PieChart.vue'
+import My1Chart from './components/My1Chart.vue'
 
 export default {
   name: 'HomePage',
   components: {
-    RadarChart,
     myChart,
     my2Chart,
-    BarChart,
-    PieChart,
+    My1Chart,
+  },
+  data() {
+    return {}
   },
   created() {
-    //检查登录状态
     if (!this.$store.state.isLoggedIn) {
       this.$router.push('/login')
     }
@@ -52,29 +60,62 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 34px;
+  margin-bottom: 20px;
+}
+
 .home {
-  text-align: center;
+  text-align: left;
   margin-top: 50px;
   min-height: 100vh;
+  margin-left: 120px;
 }
+
+.dashboard-container {
+  margin-top: 20px;
+}
+
+.chart-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 60%;
+  height: 400px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.description-container {
+  width: 30%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.description-container p {
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin: 0;
+}
+
 .chart {
   width: 100%;
   height: 100%;
-}
-.dashboard-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 使用CSS Grid布局 */
-  gap: 20px; /* 设置网格间距 */
-  padding: 20px 30px;
-}
-.chart-container {
-  width: 400px; /* 固定宽度 */
-  height: 500px; /* 固定高度 */
-  margin-bottom: 20px;
-  border: 1px solid #ddd; /* 添加边框 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>
